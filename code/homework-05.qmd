@@ -5,6 +5,7 @@ format:
     toc: true
     toc-location: left
     code-fold: true
+    theme: yeti
 execute: 
   warning: false
   message: false
