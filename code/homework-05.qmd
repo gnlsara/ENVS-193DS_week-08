@@ -1,0 +1,23 @@
+---
+title: "week8"
+format: html
+editor: visual
+---
+
+## 
+
+```{r loading-packages}
+library(tidyverse)
+library(here)
+library(janitor)
+library(ggeffects)
+library(performance)
+library(naniar) # or equivalent
+library(flextable) # or equivalent
+library(car)
+library(broom)
+# would be nice to have
+library(corrplot)
+library(AICcmodavg)
+library(GGally)
+```
