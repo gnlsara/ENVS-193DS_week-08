@@ -1,10 +1,18 @@
 ---
-title: "week8"
-format: html
-editor: visual
+title: "homework 5"
+format: 
+  html:
+    toc: true
+    toc-location: left
+    code-fold: true
+execute: 
+  warning: false
+  message: false
 ---
 
 ## 
+
+code fold is neat way to organize rendered html
 
 ```{r loading-packages}
 library(tidyverse)
