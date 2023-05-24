@@ -1,0 +1,32 @@
+---
+title: "homework 5"
+format: 
+  html:
+    toc: true
+    toc-location: left
+    code-fold: true
+    theme: yeti
+execute: 
+  warning: false
+  message: false
+---
+
+## 
+
+code fold is neat way to organize rendered html
+
+```{r loading-packages}
+library(tidyverse)
+library(here)
+library(janitor)
+library(ggeffects)
+library(performance)
+library(naniar) # or equivalent
+library(flextable) # or equivalent
+library(car)
+library(broom)
+# would be nice to have
+library(corrplot)
+library(AICcmodavg)
+library(GGally)
+```
