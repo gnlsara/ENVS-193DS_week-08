@@ -30,3 +30,86 @@ library(corrplot)
 library(AICcmodavg)
 library(GGally)
 ```
+
+read in data
+
+```{r read-in-data}
+plant <- read_csv(here("data", "knb-lter-hfr", "hf109-01-sarracenia.csv")) %>% 
+  # to make column names cleaner
+  clean_names() %>%
+  # selecting columns of interest
+  select(totmass, species, feedlevel, sla, chlorophyll, amass, num_lvs, num_phylls)
+```
+
+visualize missing data
+
+```{r missing-data-visualization}
+gg_miss_var(plant)
+```
+
+subsetting data by dropping NA's
+
+```{r subset-drop-NA}
+plant_subset <- plant %>% 
+  drop_na(chlorophyll, amass, sla, num_lvs, num_phylls)
+```
+
+create a correlation plot
+
+(ex writing): To determine the relationships between numerical varibales in our dataset, we calculated Pearson's r and visually represented correlation using a correlation plot.
+
+```{r correlation-plot}
+# calculate Pearson's r for numerical values only
+plant_cor <- plant_subset %>% 
+  select(feedlevel:num_phylls) %>% 
+  # diagonal is each variable compared to itself
+  cor(method = "pearson")
+  
+# creating a correlation plot
+corrplot(plant_cor,
+         # change shape of what's in the cells
+         method = "ellipse",
+         addCoef.col = "black")
+```
+
+create a plot of each variable compared against the others
+
+```{r pairs-plot}
+plant_subset %>% 
+  select(species:num_phylls) %>% 
+  ggpairs()
+```
+
+starting regression here:
+
+ex-writing: To determine how species and physiological characteristics predict biomass, we fit multiple linear models.
+
+```{r null-and-full-model}
+null <- lm(totmass ~ 1, data = plant_subset)
+full <- lm(totmass ~ species + feedlevel + sla + chlorophyll + amass + num_lvs + num_phylls, data = plant_subset)
+```
+
+We visually assessed normality and homoscedasticity of residuals using diagnostic plots for the full model.
+
+```{r full-diagnostics}
+par(mfrow = c(2,2))
+plot(full)
+```
+
+We also tested for normality using the Shapiro-Wilk test (null = variable of interest (residuals) are normally distributed) and homoscedasticity using the Breusch-Pagan test (null = residuals have constant variance).
+
+```{r}
+check_normality(full)
+check_heteroscedasticity(full)
+```
+
+Assumptions of linear regression are not met.
+
+```{r}
+full_log <- lm(log(totmass) ~ species + feedlevel + sla + chlorophyll + amass + num_lvs + num_phylls, data = plant_subset)
+plot(full_log)
+check_normality(full_log)
+check_heteroscedasticity(full_log)
+```
+
+All of the interpretation will be based on the transform response (natural log transform).
