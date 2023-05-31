@@ -113,3 +113,7 @@ check_heteroscedasticity(full_log)
 ```
 
 All of the interpretation will be based on the transform response (natural log transform).
+
+```{r variance-inflation-factor}
+vif(full_log)
+```
