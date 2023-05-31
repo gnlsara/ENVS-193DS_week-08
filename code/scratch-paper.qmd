@@ -114,6 +114,22 @@ check_heteroscedasticity(full_log)
 
 All of the interpretation will be based on the transform response (natural log transform).
 
+## three additional models
+
+```{r species-as-predictor-variable}
+species_model <- lm(totmass ~ species, data = plant_subset)
+par(mfrow = c(2,2))
+plot(species_model)
+check_normality(species_model)
+check_heteroscedasticity(species_model) # check assumptions
+species_log <- lm(log(totmass) ~ species, data = plant_subset)
+plot(species_log)
+check_normality(species_log)
+check_heteroscedasticity(species_log)
+```
+
+## VIF + model comparison
+
 ```{r variance-inflation-factor}
 vif(full_log)
 ```
